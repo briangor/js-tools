@@ -1,33 +1,49 @@
-const { series } = require('gulp');
-const fs = require('fs');
+const gulp = require('gulp');
+const { series, parallel } = require('gulp');
+const { src, dest } = require('gulp');
+//const cssnano = require('gulp-cssnano');
+//const sass = require('gulp-sass'); //ERR: gulp-sass no longer has a default Sass compiler;
+//const sass = require('gulp-sass')(require('sass'));
+const concat = require('gulp-concat');
+const uglify = require('gulp-uglify');
 
-// The `clean` function is not exported so it can be considered a private task.
-// It can still be used within the `series()` composition.
-function clean(cb) {
-  // body omitted
-  cb();
+function defaultTask(cb) {
+    // place code for your default task here
+    cb();
 }
 
-// The `build` function is exported so it is public and can be run with the `gulp` command.
-// It can also be used within the `series()` composition.
-function build(cb) {
-  // body omitted
-  cb();
+function hello() {
+    console.log("Testing gulp task");
 }
 
-async function asyncAwaitTask() {
-  const { version } = JSON.parse(fs.readFileSync('package.json', 'utf8'));
-  console.log(version);
-  await Promise.resolve('some result');
-}
-
-exports.build = build;
-exports.default = asyncAwaitTask;
-exports.default = series(clean, build);
-
-// function defaultTask(cb) {
-//     // place code for your default task here
+// function generateCSS(cb) {
+//     src('./app/scss/**/*.scss')
+//         .pipe(sass().on('error', sass.logError))
+//         .pipe(dest('dist/stylesheets'));
 //     cb();
 // }
 
-// exports.default = defaultTask
+function generateJS(cb) {
+    src('./app/js/**/*.js')
+        .pipe(concat('all.js'))
+        .pipe(uglify())
+        .pipe(dest('dist/js'));
+    cb();
+}
+
+exports.default = defaultTask
+//exports.css = generateCSS;
+//exports.js = generateJS;
+exports.build = series(hello, generateJS);
+
+// exports.build = series(
+//     clean,
+//     parallel(
+//       cssTranspile,
+//       series(jsTranspile, jsBundle)
+//     ),
+//     parallel(cssMinify, jsMinify),
+//     publish
+//   );
+
+//exports.build = series(clean, parallel(css, javascript));
