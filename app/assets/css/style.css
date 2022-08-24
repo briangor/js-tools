@@ -1,0 +1,8 @@
+body {
+  color: rgb(210, 244, 254);
+}
+
+.button {
+  outline: none;
+  border-radius: 0.5em;
+}

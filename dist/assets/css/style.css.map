@@ -1,0 +1,1 @@
+{"version":3,"sources":["style.css"],"names":[],"mappings":"AAAA,KACA,aACA,CAEA,QAEA,kBAAA,CADA,YAEA","file":"style.css","sourcesContent":["body {\n  color: rgb(210, 244, 254);\n}\n\n.button {\n  outline: none;\n  border-radius: 0.5em;\n}"]}
